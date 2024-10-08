@@ -17,7 +17,7 @@ sessionStore.on("error", (err) => {
 export const authenticate = async (email, password) => {
   if (email && password) {
     const user = await Admin.findOne({ email });
-    if (user || (email === 12345 && password === 12345)) {
+    if (user || (email == 12345 && password == 12345)) {
       return Promise.resolve({ email: email, password: password });
     } else {
       return null;

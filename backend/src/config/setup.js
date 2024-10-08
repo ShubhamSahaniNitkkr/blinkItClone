@@ -33,9 +33,15 @@ export const admin = new AdminJS({
     {
       resource: Models.Branch,
     },
+    {
+      resource: Models.Category,
+    },
+    {
+      resource: Models.Product,
+    },
   ],
   branding: {
-    companyName: "Blink It",
+    companyName: "BlinkIt",
     withMadeWithLove: false,
     // favicon: "Cloudinary icon",
     // logo: "Cloudinary icon",
