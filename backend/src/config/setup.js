@@ -14,6 +14,7 @@ export const admin = new AdminJS({
       options: {
         listProperties: ["phone", "role", "isActivated"],
         filterProperties: ["phone", "role"],
+        navigation: "Menus",
       },
     },
     {
@@ -21,6 +22,7 @@ export const admin = new AdminJS({
       options: {
         listProperties: ["email", "role"],
         filterProperties: ["email", "role"],
+        navigation: "Menus",
       },
     },
     {
@@ -28,16 +30,38 @@ export const admin = new AdminJS({
       options: {
         listProperties: ["email", "role"],
         filterProperties: ["email", "role"],
+        navigation: "Menus",
       },
     },
     {
       resource: Models.Branch,
+      options: {
+        navigation: "Menus",
+      },
     },
     {
       resource: Models.Category,
+      options: {
+        navigation: "Menus",
+      },
     },
     {
       resource: Models.Product,
+      options: {
+        navigation: "Menus",
+      },
+    },
+    {
+      resource: Models.Counter,
+      options: {
+        navigation: "Menus",
+      },
+    },
+    {
+      resource: Models.Order,
+      options: {
+        navigation: "Menus",
+      },
     },
   ],
   branding: {
