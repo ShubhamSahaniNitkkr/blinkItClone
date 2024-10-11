@@ -1,15 +1,16 @@
 import mongoose from "mongoose";
+import Counter from "./counter.js";
 
 const orderSchema = new mongoose.Schema({
-  orderId: { type: String, required: true },
+  orderId: { type: String, unique: true },
   customer: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Customer",
     required: true,
   },
-  deliverPartner: {
+  deliveryPartner: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "DeliverPartner",
+    ref: "DeliveryPartner",
   },
   branch: {
     type: mongoose.Schema.Types.ObjectId,
@@ -31,12 +32,12 @@ const orderSchema = new mongoose.Schema({
       count: { type: Number, required: true },
     },
   ],
-  deliverLocation: {
+  deliveryLocation: {
     latitude: { type: Number, required: true },
     longitude: { type: Number, required: true },
     address: { type: String },
   },
-  deliverPersonLocation: {
+  deliveryPersonLocation: {
     latitude: { type: Number },
     longitude: { type: Number },
     address: { type: String },
@@ -52,15 +53,11 @@ const orderSchema = new mongoose.Schema({
     default: "available",
   },
   totalPrice: { type: String, required: true },
-  createdAt: { type: Date, default: Date.now() },
-  updatedAt: { type: Date, default: Date.now() },
+  createdAt: { type: Date, default: Date.now },
+  updatedAt: { type: Date, default: Date.now },
 });
 
-const Order = mongoose.model("Order", orderSchema);
-
-export default Order;
-
-const getNextSequenceValue = async (sequenceName) => {
+async function getNextSequenceValue(sequenceName) {
   // finding the value with name
   // then incrementing
   // new value and upsert means update it
@@ -72,12 +69,17 @@ const getNextSequenceValue = async (sequenceName) => {
     { new: true, upsert: true }
   );
   return sequenceDoc.sequence_value;
-};
+}
 
-orderSchema.pre("save", async (next) => {
+orderSchema.pre("save", async function (next) {
   if (this.isNew) {
     const sequenceValue = await getNextSequenceValue("orderId");
+    console.log(sequenceValue, "sequenceValue");
     this.orderId = `BLINKIT_ORDER${sequenceValue.toString().padStart(5, "0")}`;
   }
   next();
 });
+
+const Order = mongoose.model("Order", orderSchema);
+
+export default Order;
